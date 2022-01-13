@@ -10,3 +10,23 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+.counter{
+    background-color:black;
+    color: white;
+    font-size: 50px;
+    font-weight:bold;
+    padding: 20px;
+}
+
+.clock{
+    background-color:blue;
+    color: white;
+    font-size: 50px;
+    font-weight:bold;
+    padding: 20px;
+}
+
+.col1{
+    color:red;
+}
