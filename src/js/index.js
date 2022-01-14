@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 // include your styles into the webpack bundle
 import "../styles/index.css";
@@ -12,7 +12,6 @@ function Counter(props) {
 		<>
 			<Container>
 				<Row>
-					<Col></Col>
 					<Col className="counter">
 						<Row>
 							<Col>
@@ -34,25 +33,19 @@ function Counter(props) {
 							</Col>
 						</Row>
 					</Col>
+					<Col xs={4}></Col>
 					<Col className="clock">
-						<Row>
+						<Row className="d-flex justify-content-center">
 							<Col>
-								<div className="col5">
-									<i class="far fa-clock"></i>
-								</div>
-							</Col>
-							<Col>
-								<div className="col4">{props.clockHours}</div>
-							</Col>
-							<Col>
-								<div className="col4">{props.clockMinutes}</div>
-							</Col>
-							<Col>
-								<div className="col2">{props.clockSeconds}</div>
+								{" "}
+								<i class="far fa-clock"></i> {props.clockHours}{" "}
+								: {props.clockMinutes} .{" "}
+								<span className="seconds">
+									{props.clockSeconds}
+								</span>
 							</Col>
 						</Row>
 					</Col>
-					<Col></Col>
 				</Row>
 			</Container>
 		</>
@@ -70,17 +63,20 @@ Counter.PropTypes = {
 };
 
 let counter = 0;
+let counterClock = 0;
 let varOne = 0;
 let varTwo = 0;
 let varThree = 0;
 let varFour = 0;
-
 let varClockSeconds = 0;
 let varClockMinutes = 0;
 let varClockHours = 0;
+let varClockMinutesOneDigit = 0;
+let varClockHoursOneDigit = 0;
 
 setInterval(function () {
 	counter++;
+	counterClock++;
 	varTwo = Math.floor(counter / 10);
 	varThree = Math.floor(counter / 100);
 	varFour = Math.floor(counter / 1000);
@@ -93,14 +89,14 @@ setInterval(function () {
 
 	if (varClockSeconds == 59) {
 		varClockSeconds = 0;
-		varClockMinutes++;
+		varClockMinutesOneDigit++;
 	} else {
 		varClockSeconds++;
 	}
 
 	if (varClockMinutes == 59) {
 		varClockMinutes = 0;
-		varClockHours++;
+		varClockHoursOneDigit++;
 	}
 
 	if (varClockHours == 24) {
@@ -113,8 +109,20 @@ setInterval(function () {
 		varClockSeconds = "0" + varClockSeconds;
 	}
 
+	if (varClockMinutes < 10 && counterClock < 600) {
+		varClockMinutes = "0" + varClockMinutesOneDigit;
+	} else {
+		varClockMinutes = varClockMinutesOneDigit;
+	}
+
+	if (varClockHours < 10 && counterClock < 36000) {
+		varClockHours = "0" + varClockHoursOneDigit;
+	} else {
+		varClockHours = varClockHoursOneDigit;
+	}
+
 	//console.log(varOne, varTwo, varThree, varFour);
-	console.log(varClockHours, varClockMinutes, varClockSeconds);
+	//console.log(varClockHours, varClockMinutes, varClockSeconds);
 
 	ReactDOM.render(
 		<Counter
